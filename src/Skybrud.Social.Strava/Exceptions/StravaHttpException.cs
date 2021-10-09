@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Exceptions;
 
@@ -8,7 +7,7 @@ namespace Skybrud.Social.Strava.Exceptions {
     /// <summary>
     /// Class representing an exception/error returned by the Strava API.
     /// </summary>
-    public class StravaHttpException : Exception, IHttpException {
+    public class StravaHttpException : StravaException, IHttpException {
 
         #region Properties
 
