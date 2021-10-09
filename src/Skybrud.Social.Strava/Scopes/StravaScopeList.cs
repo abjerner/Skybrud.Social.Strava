@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Skybrud.Social.Meetup.Scopes {
+namespace Skybrud.Social.Strava.Scopes {
 
     /// <summary>
     /// Class representing a collection of scopes for the Strava API.
     /// </summary>
-    public class StravaScopeCollection : IEnumerable<StravaScope> {
+    public class StravaScopeList : IEnumerable<StravaScope> {
 
         #region Private fields
 
@@ -30,7 +30,7 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// Initializes a new collection based on the specified <paramref name="array"/> of scopes.
         /// </summary>
         /// <param name="array">Array of scopes.</param>
-        public StravaScopeCollection(params StravaScope[] array) {
+        public StravaScopeList(params StravaScope[] array) {
             _list.AddRange(array);
         }
 
@@ -91,8 +91,8 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// </summary>
         /// <param name="scope">The scope the collection should be based on.</param>
         /// <returns>A new collection based on a single <paramref name="scope"/>.</returns>
-        public static implicit operator StravaScopeCollection(StravaScope scope) {
-            return new StravaScopeCollection(scope);
+        public static implicit operator StravaScopeList(StravaScope scope) {
+            return new StravaScopeList(scope);
         }
 
         /// <summary>
@@ -100,18 +100,18 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// </summary>
         /// <param name="array">The array of scopes the collection should be based on.</param>
         /// <returns>A new collection based on an <paramref name="array"/> of scopes.</returns>
-        public static implicit operator StravaScopeCollection(StravaScope[] array) {
-            return new StravaScopeCollection(array ?? new StravaScope[0]);
+        public static implicit operator StravaScopeList(StravaScope[] array) {
+            return new StravaScopeList(array ?? new StravaScope[0]);
         }
 
         /// <summary>
-        /// Adds support for adding a <paramref name="scope"/> to the <paramref name="collection"/> using the plus operator.
+        /// Adds support for adding a <paramref name="scope"/> to the <paramref name="list"/> using the plus operator.
         /// </summary>
-        /// <param name="collection">The collection to which <paramref name="scope"/> will be added.</param>
-        /// <param name="scope">The scope to be added to the <paramref name="collection"/>.</param>
-        public static StravaScopeCollection operator +(StravaScopeCollection collection, StravaScope scope) {
-            collection.Add(scope);
-            return collection;
+        /// <param name="list">The collection to which <paramref name="scope"/> will be added.</param>
+        /// <param name="scope">The scope to be added to the <paramref name="list"/>.</param>
+        public static StravaScopeList operator +(StravaScopeList list, StravaScope scope) {
+            list.Add(scope);
+            return list;
         }
 
         #endregion

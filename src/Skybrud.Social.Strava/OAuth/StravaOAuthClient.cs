@@ -4,8 +4,8 @@ using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
-using Skybrud.Social.Meetup.Scopes;
 using Skybrud.Social.Strava.Responses.Authentication;
+using Skybrud.Social.Strava.Scopes;
 
 namespace Skybrud.Social.Strava.OAuth {
 
@@ -52,30 +52,30 @@ namespace Skybrud.Social.Strava.OAuth {
         /// <param name="state">The state to send to Meetups's OAuth login page.</param>
         /// <returns>An authorization URL based on <paramref name="state"/>.</returns>
         public string GetAuthorizationUrl(string state) {
-            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, default(StravaScopeCollection));
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, default(StravaScopeList));
         }
         
         public string GetAuthorizationUrl(string state, StravaScope scope) {
-            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeCollection(scope));
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeList(scope));
         }
 
         public string GetAuthorizationUrl(string state, params StravaScope[] scope) {
-            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeCollection(scope));
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeList(scope));
         }
 
-        public string GetAuthorizationUrl(string state, StravaScopeCollection scope) {
+        public string GetAuthorizationUrl(string state, StravaScopeList scope) {
             return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope);
         }
         
         public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScope scope) {
-            return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeCollection(scope));
+            return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeList(scope));
         }
         
         public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, params StravaScope[] scope) {
-            return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeCollection(scope));
+            return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeList(scope));
         }
 
-        public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScopeCollection scope) {
+        public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScopeList scope) {
 
             // Some validation
             if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
