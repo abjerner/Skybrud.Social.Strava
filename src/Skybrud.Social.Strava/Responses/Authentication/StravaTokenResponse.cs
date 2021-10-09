@@ -1,4 +1,4 @@
-﻿using Skybrud.Social.Http;
+﻿using Skybrud.Essentials.Http;
 using Skybrud.Social.Strava.Models.Authentication;
 
 namespace Skybrud.Social.Strava.Responses.Authentication {
@@ -15,7 +15,7 @@ namespace Skybrud.Social.Strava.Responses.Authentication {
 
         #region Constructors
 
-        private StravaTokenResponse(SocialHttpResponse response) : base(response) {
+        private StravaTokenResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -32,9 +32,9 @@ namespace Skybrud.Social.Strava.Responses.Authentication {
         /// <summary>
         /// Parses the specified <paramref name="response"/> into an instance of <see cref="StravaTokenResponse"/>.
         /// </summary>
-        /// <param name="response">The instance of <see cref="SocialHttpResponse"/> representing the raw response.</param>
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
         /// <returns>An instance of <see cref="StravaTokenResponse"/> representing the response.</returns>
-        public static StravaTokenResponse ParseResponse(SocialHttpResponse response) {
+        public static StravaTokenResponse ParseResponse(IHttpResponse response) {
             return response == null ? null : new StravaTokenResponse(response);
         }
 

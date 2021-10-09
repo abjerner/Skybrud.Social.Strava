@@ -26,11 +26,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Skybrud.Social.Core" Version="1.0.4" />
+    <PackageReference Include="Skybrud.Essentials.Http" Version="1.0.14" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="../build/Limbo.png" Pack="true" PackagePath="\"/>
+    <None Include="../build/Limbo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

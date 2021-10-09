@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Linq;
 using Skybrud.Essentials.Common;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Client;
+using Skybrud.Essentials.Http.Collections;
 using Skybrud.Social.Meetup.Scopes;
 using Skybrud.Social.Strava.Responses.Authentication;
 
 namespace Skybrud.Social.Strava.OAuth {
 
-    public class StravaOAuthClient : SocialHttpClient {
+    public class StravaOAuthClient : HttpClient {
 
         #region Properties
 
@@ -85,7 +86,7 @@ namespace Skybrud.Social.Strava.OAuth {
                 throw new ArgumentNullException(nameof(state), "A valid state should be specified as it is part of the security of OAuth 2.0.");
             }
 
-            IHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
             query.Add("client_id", ClientId);
             query.Add("redirect_uri", RedirectUri);
             query.Add("response_type", "code");
@@ -113,14 +114,14 @@ namespace Skybrud.Social.Strava.OAuth {
             if (String.IsNullOrWhiteSpace(authCode)) throw new ArgumentNullException(nameof(authCode));
 
             // Initialize the query string
-            SocialHttpPostData data = new SocialHttpPostData {
+            IHttpPostData data = new HttpPostData {
                 {"client_id", ClientId},
                 {"client_secret", ClientSecret},
                 {"code", authCode}
             };
 
             // Make the call to the API
-            SocialHttpResponse response = SocialUtils.Http.DoHttpPostRequest("https://www.strava.com/oauth/token", null, data);
+            IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/oauth/token", null, data);
 
             // Parse the response
             return StravaTokenResponse.ParseResponse(response);
