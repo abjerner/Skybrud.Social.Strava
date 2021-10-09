@@ -1,0 +1,134 @@
+﻿using System;
+using System.Linq;
+using Skybrud.Essentials.Common;
+using Skybrud.Social.Http;
+using Skybrud.Social.Interfaces.Http;
+using Skybrud.Social.Meetup.Scopes;
+using Skybrud.Social.Strava.Responses.Authentication;
+
+namespace Skybrud.Social.Strava.OAuth {
+
+    public class StravaOAuthClient : SocialHttpClient {
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the client ID of the app.
+        /// </summary>
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client secret of the app.
+        /// </summary>
+        public string ClientSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the redirect URI of your application.
+        /// </summary>
+        public string RedirectUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access token.
+        /// </summary>
+        public string AccessToken { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance with default options.
+        /// </summary>
+        public StravaOAuthClient() { }
+
+        #endregion
+
+        #region Member methods
+
+        /// <summary>
+        /// Generates the authorization URL using the specified <paramref name="state"/> and the default scope.
+        /// </summary>
+        /// <param name="state">The state to send to Meetups's OAuth login page.</param>
+        /// <returns>An authorization URL based on <paramref name="state"/>.</returns>
+        public string GetAuthorizationUrl(string state) {
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, default(StravaScopeCollection));
+        }
+        
+        public string GetAuthorizationUrl(string state, StravaScope scope) {
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeCollection(scope));
+        }
+
+        public string GetAuthorizationUrl(string state, params StravaScope[] scope) {
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeCollection(scope));
+        }
+
+        public string GetAuthorizationUrl(string state, StravaScopeCollection scope) {
+            return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope);
+        }
+        
+        public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScope scope) {
+            return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeCollection(scope));
+        }
+        
+        public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, params StravaScope[] scope) {
+            return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeCollection(scope));
+        }
+
+        public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScopeCollection scope) {
+
+            // Some validation
+            if (String.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (String.IsNullOrWhiteSpace(RedirectUri)) throw new PropertyNotSetException(nameof(RedirectUri));
+
+            // Do we have a valid "state" ?
+            if (String.IsNullOrWhiteSpace(state)) {
+                throw new ArgumentNullException(nameof(state), "A valid state should be specified as it is part of the security of OAuth 2.0.");
+            }
+
+            IHttpQueryString query = new SocialHttpQueryString();
+            query.Add("client_id", ClientId);
+            query.Add("redirect_uri", RedirectUri);
+            query.Add("response_type", "code");
+            query.Add("state", state);
+
+            if (scope != null && scope.Any()) query.Add("scope", scope + "");
+
+            if (approvalPrompt == StravaApprovalPrompt.Force) query.Add("approval_prompt", "force");
+
+            // Generate the authorization URL
+            return "https://www.strava.com/oauth/authorize?" + query;
+
+        }
+
+        /// <summary>
+        /// Exchanges the specified authorization code for an access token.
+        /// </summary>
+        /// <param name="authCode">The authorization code received from the Strava OAuth dialog.</param>
+        /// <returns>An instance of <see cref="StravaTokenResponse"/> representing the response.</returns>
+        public StravaTokenResponse GetAccessTokenFromAuthCode(string authCode) {
+
+            // Some validation
+            if (String.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (String.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
+            if (String.IsNullOrWhiteSpace(authCode)) throw new ArgumentNullException(nameof(authCode));
+
+            // Initialize the query string
+            SocialHttpPostData data = new SocialHttpPostData {
+                {"client_id", ClientId},
+                {"client_secret", ClientSecret},
+                {"code", authCode}
+            };
+
+            // Make the call to the API
+            SocialHttpResponse response = SocialUtils.Http.DoHttpPostRequest("https://www.strava.com/oauth/token", null, data);
+
+            // Parse the response
+            return StravaTokenResponse.ParseResponse(response);
+
+        }
+
+        #endregion
+
+    }
+
+}
