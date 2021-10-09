@@ -18,56 +18,56 @@ namespace Skybrud.Social.Strava.Models.Athletes {
         /// <summary>
         /// Gets the ID of the athlete.
         /// </summary>
-        public long Id { get; private set; }
+        public long Id { get; }
 
-        public string Username { get; private set; }
+        public string Username { get; }
 
         /// <summary>
         /// Gets the athlete's first name.
         /// </summary>
-        public string FirstName { get; private set; }
+        public string FirstName { get; }
 
         /// <summary>
         /// Gets the athlete's last name.
         /// </summary>
-        public string LastName { get; private set; }
+        public string LastName { get; }
 
         /// <summary>
         /// Gets the athlete's city.
         /// </summary>
-        public string City { get; private set; }
+        public string City { get; }
 
         /// <summary>
         /// Gets the athlete's state or geographical region.
         /// </summary>
-        public string State { get; private set; }
+        public string State { get; }
 
         /// <summary>
         /// Gets the athlete's country.
         /// </summary>
-        public string Country { get; private set; }
+        public string Country { get; }
 
         /// <summary>
         /// Gets the athlete's sex. May take one of the following values: <c>M</c>, <c>F</c>
         /// </summary>
-        public string Sex { get; private set; }
+        public string Sex { get; }
 
         /// <summary>
         /// Gets the athlete's premium status.
         /// </summary>
-        public bool IsPremium { get; private set; }
+        public bool IsPremium { get; }
 
         /// <summary>
         /// Gets the time at which the athlete was created.
         /// </summary>
-        public EssentialsDateTime CreatedAt { get; private set; }
+        public EssentialsDateTime CreatedAt { get; }
 
         /// <summary>
         /// Gets the time at which the athlete was last updated.
         /// </summary>
-        public EssentialsDateTime UpdatedAt { get; private set; }
+        public EssentialsDateTime UpdatedAt { get; }
 
-        public string Email { get; private set; }
+        public string Email { get; }
 
         #endregion
 
@@ -97,6 +97,8 @@ namespace Skybrud.Social.Strava.Models.Athletes {
 
         #endregion
 
+        #region Static methods
+
         /// <summary>
         /// Parses the specified <paramref name="obj"/> into an instance of <see cref="StravaAthlete"/>.
         /// </summary>
@@ -105,6 +107,8 @@ namespace Skybrud.Social.Strava.Models.Athletes {
         public static StravaAthlete Parse(JObject obj) {
             return obj == null ? null : new StravaAthlete(obj);
         }
+
+        #endregion
 
     }
 

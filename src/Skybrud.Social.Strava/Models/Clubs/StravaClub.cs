@@ -56,6 +56,8 @@ namespace Skybrud.Social.Strava.Models.Clubs {
 
         #endregion
 
+        #region Static methods
+
         /// <summary>
         /// Parses the specified <paramref name="obj"/> into an instance of <see cref="StravaDetailedClub"/>.
         /// </summary>
@@ -64,6 +66,8 @@ namespace Skybrud.Social.Strava.Models.Clubs {
         public static StravaDetailedClub Parse(JObject obj) {
             return obj == null ? null : new StravaDetailedClub(obj);
         }
+
+        #endregion
 
     }
 

@@ -36,7 +36,7 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// <param name="name">The name of the scope.</param>
         public StravaScope(string name) {
             Name = name;
-            Description = String.Empty;
+            Description = string.Empty;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// <param name="description">The description of the scope.</param>
         public StravaScope(string name, string description) {
             Name = name;
-            Description = String.IsNullOrWhiteSpace(description) ? String.Empty : description.Trim();
+            Description = description?.Trim() ?? string.Empty;
         }
 
         #endregion
@@ -69,8 +69,18 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// Registers a scope in the internal dictionary.
         /// </summary>
         /// <param name="name">The name of the scope.</param>
+        internal static StravaScope RegisterScope(string name) {
+            StravaScope scope = new StravaScope(name, null);
+            Scopes.Add(scope.Name, scope);
+            return scope;
+        }
+
+        /// <summary>
+        /// Registers a scope in the internal dictionary.
+        /// </summary>
+        /// <param name="name">The name of the scope.</param>
         /// <param name="description">The description of the scope.</param>
-        internal static StravaScope RegisterScope(string name, string description = null) {
+        internal static StravaScope RegisterScope(string name, string description) {
             StravaScope scope = new StravaScope(name, description);
             Scopes.Add(scope.Name, scope);
             return scope;
@@ -82,8 +92,7 @@ namespace Skybrud.Social.Meetup.Scopes {
         /// <param name="name">The name of the scope.</param>
         /// <returns>Gets a scope matching the specified <paramref name="name"/>, or <c>null</c> if not found.</returns>
         public static StravaScope GetScope(string name) {
-            StravaScope scope;
-            return Scopes.TryGetValue(name, out scope) ? scope : null;
+            return Scopes.TryGetValue(name, out StravaScope scope) ? scope : null;
         }
 
         /// <summary>

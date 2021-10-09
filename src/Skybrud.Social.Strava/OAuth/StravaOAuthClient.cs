@@ -78,11 +78,11 @@ namespace Skybrud.Social.Strava.OAuth {
         public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScopeCollection scope) {
 
             // Some validation
-            if (String.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
-            if (String.IsNullOrWhiteSpace(RedirectUri)) throw new PropertyNotSetException(nameof(RedirectUri));
+            if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (string.IsNullOrWhiteSpace(RedirectUri)) throw new PropertyNotSetException(nameof(RedirectUri));
 
             // Do we have a valid "state" ?
-            if (String.IsNullOrWhiteSpace(state)) {
+            if (string.IsNullOrWhiteSpace(state)) {
                 throw new ArgumentNullException(nameof(state), "A valid state should be specified as it is part of the security of OAuth 2.0.");
             }
 
@@ -109,9 +109,9 @@ namespace Skybrud.Social.Strava.OAuth {
         public StravaTokenResponse GetAccessTokenFromAuthCode(string authCode) {
 
             // Some validation
-            if (String.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
-            if (String.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
-            if (String.IsNullOrWhiteSpace(authCode)) throw new ArgumentNullException(nameof(authCode));
+            if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (string.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
+            if (string.IsNullOrWhiteSpace(authCode)) throw new ArgumentNullException(nameof(authCode));
 
             // Initialize the query string
             IHttpPostData data = new HttpPostData {
