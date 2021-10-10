@@ -117,11 +117,12 @@ namespace Skybrud.Social.Strava.OAuth {
             IHttpPostData data = new HttpPostData {
                 {"client_id", ClientId},
                 {"client_secret", ClientSecret},
-                {"code", authCode}
+                {"code", authCode},
+                {"grant_type", "authorization_code"}
             };
 
             // Make the call to the API
-            IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/oauth/token", null, data);
+            IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/api/v3/oauth/token", null, data);
 
             // Parse the response
             return StravaTokenResponse.ParseResponse(response);

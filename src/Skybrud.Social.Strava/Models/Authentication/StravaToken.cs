@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
+using Skybrud.Essentials.Time;
 using Skybrud.Social.Strava.Models.Athletes;
 
 namespace Skybrud.Social.Strava.Models.Authentication {
@@ -11,9 +13,15 @@ namespace Skybrud.Social.Strava.Models.Authentication {
 
         #region Properties
 
-        public string AccessToken { get; }
-
         public string TokenType { get; }
+
+        public EssentialsTime ExpiresAt { get; }
+
+        public TimeSpan ExpiresIn { get; }
+
+        public string RefreshToken { get; }
+
+        public string AccessToken { get; }
 
         public StravaAthlete Ahtlete { get; }
 
@@ -22,8 +30,11 @@ namespace Skybrud.Social.Strava.Models.Authentication {
         #region Constructors
 
         private StravaToken(JObject obj) : base(obj) {
-            AccessToken = obj.GetString("access_token");
             TokenType = obj.GetString("token_type");
+            ExpiresAt = obj.GetInt32("expires_at", x => x > 0 ? EssentialsTime.FromUnixTimestamp(x) : null);
+            ExpiresIn = obj.GetDouble("expires_in", TimeSpan.FromSeconds);
+            RefreshToken = obj.GetString("refresh_token");
+            AccessToken = obj.GetString("access_token");
             Ahtlete = obj.GetObject("athlete", StravaAthlete.Parse);
         }
 
