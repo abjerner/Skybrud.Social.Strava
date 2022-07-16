@@ -129,6 +129,34 @@ namespace Skybrud.Social.Strava.OAuth {
 
         }
 
+        /// <summary>
+        /// Exchanges the specified refresh token for an access token.
+        /// </summary>
+        /// <param name="refreshToken">The refresh token.</param>
+        /// <returns>An instance of <see cref="StravaTokenResponse"/> representing the response.</returns>
+        public StravaTokenResponse GetAccessTokenFromRefereshToken(string refreshToken) {
+
+            // Some validation
+            if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (string.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
+            if (string.IsNullOrWhiteSpace(refreshToken)) throw new ArgumentNullException(nameof(refreshToken));
+
+            // Initialize the query string
+            IHttpPostData data = new HttpPostData {
+                {"client_id", ClientId},
+                {"client_secret", ClientSecret},
+                {"grant_type", "refresh_token"},
+                {"refresh_token", refreshToken}
+            };
+
+            // Make the call to the API
+            IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/api/v3/oauth/token", null, data);
+
+            // Parse the response
+            return StravaTokenResponse.ParseResponse(response);
+
+        }
+
         #endregion
 
     }
