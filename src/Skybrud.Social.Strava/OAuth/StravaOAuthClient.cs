@@ -4,6 +4,7 @@ using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
+using Skybrud.Social.Strava.Endpoints;
 using Skybrud.Social.Strava.Responses.Authentication;
 using Skybrud.Social.Strava.Scopes;
 
@@ -33,6 +34,11 @@ namespace Skybrud.Social.Strava.OAuth {
         /// </summary>
         public string AccessToken { get; set; }
 
+        /// <summary>
+        /// Gets a reference to the raw <strong>Atheletes</strong> endpoint.
+        /// </summary>
+        public StravaAtheletesRawEndpoint Atheletes { get; }
+
         #endregion
 
         #region Constructors
@@ -40,7 +46,9 @@ namespace Skybrud.Social.Strava.OAuth {
         /// <summary>
         /// Initializes a new instance with default options.
         /// </summary>
-        public StravaOAuthClient() { }
+        public StravaOAuthClient() {
+            Atheletes = new StravaAtheletesRawEndpoint(this);
+        }
 
         #endregion
 

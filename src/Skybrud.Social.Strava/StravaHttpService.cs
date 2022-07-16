@@ -1,4 +1,5 @@
 ﻿using System;
+using Skybrud.Social.Strava.Endpoints;
 using Skybrud.Social.Strava.OAuth;
 
 namespace Skybrud.Social.Strava {
@@ -15,6 +16,11 @@ namespace Skybrud.Social.Strava {
         /// </summary>
         public StravaOAuthClient Client { get; set; }
 
+        /// <summary>
+        /// Gets a reference to the <strong>Atheletes</strong> endpoint.
+        /// </summary>
+        public StravaAtheletesEndpoint Atheletes { get; }
+
         #endregion
 
         #region Constructors
@@ -24,6 +30,7 @@ namespace Skybrud.Social.Strava {
         /// </summary>
         public StravaHttpService(StravaOAuthClient client) {
             Client = client;
+            Atheletes = new StravaAtheletesEndpoint(this);
         }
 
         #endregion
