@@ -46,7 +46,12 @@ namespace Skybrud.Social.Strava {
             if (client == null) throw new ArgumentNullException(nameof(client));
             return new StravaHttpService(client);
         }
-        
+
+        public static StravaHttpService CreateFromAccessToken(string accessToken) {
+            if (string.IsNullOrWhiteSpace(accessToken)) throw new ArgumentNullException(nameof(accessToken));
+            return new StravaHttpService(new StravaOAuthClient { AccessToken = accessToken });
+        }
+
         #endregion
 
     }

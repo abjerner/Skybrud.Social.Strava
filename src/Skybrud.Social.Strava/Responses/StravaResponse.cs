@@ -15,23 +15,10 @@ namespace Skybrud.Social.Strava.Responses {
         /// Initializes a new instance based on the specified <paramref name="response"/>.
         /// </summary>
         /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-        protected StravaResponse(IHttpResponse response) : base(response) { }
-
-        #endregion
-
-        #region Static methods
-
-        /// <summary>
-        /// Validates the specified <paramref name="response"/>.
-        /// </summary>
-        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-        public static void ValidateResponse(IHttpResponse response) {
-
-            // Skip error checking if the server responds with an OK status code
+        protected StravaResponse(IHttpResponse response) : base(response) {
             if (response.StatusCode == HttpStatusCode.OK) return;
-            
+            if (response.StatusCode == HttpStatusCode.Created) return;
             throw new StravaHttpException(response);
-
         }
 
         #endregion

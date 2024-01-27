@@ -133,7 +133,7 @@ namespace Skybrud.Social.Strava.OAuth {
             IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/api/v3/oauth/token", null, data);
 
             // Parse the response
-            return StravaTokenResponse.ParseResponse(response);
+            return new StravaTokenResponse(response);
 
         }
 
@@ -161,7 +161,7 @@ namespace Skybrud.Social.Strava.OAuth {
             IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/api/v3/oauth/token", null, data);
 
             // Parse the response
-            return StravaTokenResponse.ParseResponse(response);
+            return new StravaTokenResponse(response);
 
         }
 
