@@ -35,9 +35,9 @@ namespace Skybrud.Social.Strava.OAuth {
         public string AccessToken { get; set; }
 
         /// <summary>
-        /// Gets a reference to the raw <strong>Atheletes</strong> endpoint.
+        /// Gets a reference to the raw <strong>Athletes</strong> endpoint.
         /// </summary>
-        public StravaAtheletesRawEndpoint Atheletes { get; }
+        public StravaAthletesRawEndpoint Athletes { get; }
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace Skybrud.Social.Strava.OAuth {
         /// Initializes a new instance with default options.
         /// </summary>
         public StravaOAuthClient() {
-            Atheletes = new StravaAtheletesRawEndpoint(this);
+            Athletes = new StravaAthletesRawEndpoint(this);
         }
 
         #endregion

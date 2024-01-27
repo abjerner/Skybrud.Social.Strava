@@ -17,9 +17,9 @@ namespace Skybrud.Social.Strava {
         public StravaOAuthClient Client { get; set; }
 
         /// <summary>
-        /// Gets a reference to the <strong>Atheletes</strong> endpoint.
+        /// Gets a reference to the <strong>Athletes</strong> endpoint.
         /// </summary>
-        public StravaAtheletesEndpoint Atheletes { get; }
+        public StravaAthletesEndpoint Athletes { get; }
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace Skybrud.Social.Strava {
         /// </summary>
         public StravaHttpService(StravaOAuthClient client) {
             Client = client;
-            Atheletes = new StravaAtheletesEndpoint(this);
+            Athletes = new StravaAthletesEndpoint(this);
         }
 
         #endregion
