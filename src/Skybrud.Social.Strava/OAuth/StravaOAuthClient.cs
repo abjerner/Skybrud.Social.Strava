@@ -165,6 +165,19 @@ namespace Skybrud.Social.Strava.OAuth {
 
         }
 
+        /// <inheritdoc />
+        protected override void PrepareHttpRequest(IHttpRequest request) {
+
+            // Prepend the domain and scheme to the URL if not already specified
+            if (request.Url.StartsWith("/")) request.Url = $"https://www.strava.com{request.Url}";
+
+            // Add the OAuth bearer token via the "Authorization" header (if specified)
+            if (string.IsNullOrWhiteSpace(AccessToken) == false) {
+                request.Authorization = $"Bearer {AccessToken}";
+            }
+
+        }
+
         #endregion
 
     }
