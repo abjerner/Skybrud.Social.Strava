@@ -2,39 +2,37 @@
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Exceptions;
 
-namespace Skybrud.Social.Strava.Exceptions {
+namespace Skybrud.Social.Strava.Exceptions;
+
+/// <summary>
+/// Class representing an exception/error returned by the Strava API.
+/// </summary>
+public class StravaHttpException : StravaException, IHttpException {
+
+    #region Properties
 
     /// <summary>
-    /// Class representing an exception/error returned by the Strava API.
+    /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
     /// </summary>
-    public class StravaHttpException : StravaException, IHttpException {
+    public IHttpResponse Response { get; }
 
-        #region Properties
+    /// <summary>
+    /// Gets the status code of the underlying response.
+    /// </summary>
+    public HttpStatusCode StatusCode => Response.StatusCode;
 
-        /// <summary>
-        /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
-        /// </summary>
-        public IHttpResponse Response { get; }
+    #endregion
 
-        /// <summary>
-        /// Gets the status code of the underlying response.
-        /// </summary>
-        public HttpStatusCode StatusCode => Response.StatusCode;
+    #region Constructors
 
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new exception based on the specified <paramref name="response"/>.
-        /// </summary>
-        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-        public StravaHttpException(IHttpResponse response) : base("Invalid response received from the Strava API (Status: " + (int) response.StatusCode + ")") {
-            Response = response;
-        }
-
-        #endregion
-
+    /// <summary>
+    /// Initializes a new exception based on the specified <paramref name="response"/>.
+    /// </summary>
+    /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+    public StravaHttpException(IHttpResponse response) : base("Invalid response received from the Strava API (Status: " + (int) response.StatusCode + ")") {
+        Response = response;
     }
+
+    #endregion
 
 }

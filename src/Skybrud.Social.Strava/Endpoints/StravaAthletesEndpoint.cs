@@ -1,47 +1,45 @@
 ﻿using Skybrud.Social.Strava.Options.Athletes;
 using Skybrud.Social.Strava.Responses.Activities;
 
-namespace Skybrud.Social.Strava.Endpoints {
+namespace Skybrud.Social.Strava.Endpoints;
+
+/// <summary>
+/// Implementation of the <strong>Athletes</strong> endpoint.
+/// </summary>
+public class StravaAthletesEndpoint {
+
+    #region Properties
 
     /// <summary>
-    /// Implementation of the <strong>Athletes</strong> endpoint.
+    /// Gets a reference to the Strava service implementation.
     /// </summary>
-    public class StravaAthletesEndpoint {
+    public StravaHttpService Service { get; }
 
-        #region Properties
+    /// <summary>
+    /// Gets a reference to the raw endpoint.
+    /// </summary>
+    public StravaAthletesRawEndpoint Raw => Service.Client.Athletes;
 
-        /// <summary>
-        /// Gets a reference to the Strava service implementation.
-        /// </summary>
-        public StravaHttpService Service { get; }
+    #endregion
 
-        /// <summary>
-        /// Gets a reference to the raw endpoint.
-        /// </summary>
-        public StravaAthletesRawEndpoint Raw => Service.Client.Athletes;
+    #region Constructors
 
-        #endregion
-
-        #region Constructors
-
-        internal StravaAthletesEndpoint(StravaHttpService service) {
-            Service = service;
-        }
-
-        #endregion
-
-        #region Member methods
-
-        public StravaActivityListResponse GetActivities() {
-            return new StravaActivityListResponse(Raw.GetActivities());
-        }
-
-        public StravaActivityListResponse GetActivities(StravaGetAthleteActiviesOptions options) {
-            return new StravaActivityListResponse(Raw.GetActivities(options));
-        }
-
-        #endregion
-
+    internal StravaAthletesEndpoint(StravaHttpService service) {
+        Service = service;
     }
+
+    #endregion
+
+    #region Member methods
+
+    public StravaActivityListResponse GetActivities() {
+        return new StravaActivityListResponse(Raw.GetActivities());
+    }
+
+    public StravaActivityListResponse GetActivities(StravaGetAthleteActiviesOptions options) {
+        return new StravaActivityListResponse(Raw.GetActivities(options));
+    }
+
+    #endregion
 
 }

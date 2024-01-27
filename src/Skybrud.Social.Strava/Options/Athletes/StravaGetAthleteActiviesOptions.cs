@@ -3,49 +3,47 @@ using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Time;
 
-namespace Skybrud.Social.Strava.Options.Athletes {
-    
-    public class StravaGetAthleteActiviesOptions : IHttpRequestOptions {
+namespace Skybrud.Social.Strava.Options.Athletes;
 
-        #region Properties
+public class StravaGetAthleteActiviesOptions : IHttpRequestOptions {
 
-        /// <summary>
-        /// A timestamp to use for filtering activities that have taken place before a certain time.
-        /// </summary>
-        public EssentialsTime Before { get; set; }
+    #region Properties
 
-        /// <summary>
-        /// A timestamp to use for filtering activities that have taken place after a certain time.
-        /// </summary>
-        public EssentialsTime After { get; set; }
+    /// <summary>
+    /// A timestamp to use for filtering activities that have taken place before a certain time.
+    /// </summary>
+    public EssentialsTime Before { get; set; }
 
-        /// <summary>
-        /// Page number. Defaults to 1 if not specified.
-        /// </summary>
-        public int? Page { get; set; }
+    /// <summary>
+    /// A timestamp to use for filtering activities that have taken place after a certain time.
+    /// </summary>
+    public EssentialsTime After { get; set; }
 
-        /// <summary>
-        /// Number of items per page. Defaults to 30 if not specified.
-        /// </summary>
-        public int? PerPage { get; set; }
+    /// <summary>
+    /// Page number. Defaults to 1 if not specified.
+    /// </summary>
+    public int? Page { get; set; }
 
-        #endregion
+    /// <summary>
+    /// Number of items per page. Defaults to 30 if not specified.
+    /// </summary>
+    public int? PerPage { get; set; }
 
-        #region Member methods
+    #endregion
 
-        public IHttpRequest GetRequest() {
+    #region Member methods
 
-            IHttpQueryString query = new HttpQueryString();
+    public IHttpRequest GetRequest() {
 
-            if (Page != null) query.Add("page", Page);
-            if (PerPage != null) query.Add("per_page", PerPage);
+        IHttpQueryString query = new HttpQueryString();
 
-            return HttpRequest.Get("/api/v3/athlete/activities", query);
+        if (Page != null) query.Add("page", Page);
+        if (PerPage != null) query.Add("per_page", PerPage);
 
-        }
-
-        #endregion
+        return HttpRequest.Get("/api/v3/athlete/activities", query);
 
     }
+
+    #endregion
 
 }
