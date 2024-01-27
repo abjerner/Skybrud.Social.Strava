@@ -29,7 +29,7 @@ public class StravaHttpException : StravaException, IHttpException {
     /// Initializes a new exception based on the specified <paramref name="response"/>.
     /// </summary>
     /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-    public StravaHttpException(IHttpResponse response) : base("Invalid response received from the Strava API (Status: " + (int) response.StatusCode + ")") {
+    public StravaHttpException(IHttpResponse response) : base($"Invalid response received from the Strava API (status: {(int) response.StatusCode})") {
         Response = response;
     }
 

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json;
 
-namespace Skybrud.Social.Strava.Models; 
+namespace Skybrud.Social.Strava.Models;
 
 /// <summary>
 /// Class representing an object received from the Strava API.
