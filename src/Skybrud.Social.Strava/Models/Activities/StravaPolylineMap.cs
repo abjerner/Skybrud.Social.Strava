@@ -30,9 +30,9 @@ public class StravaPolylineMap {
     #region Constructors
 
     private StravaPolylineMap(JObject json) {
-        Id = json.GetString("id");
-        Polyline = json.GetString("polyline");
-        PolylineSummary = json.GetString("summary_polyline");
+        Id = json.GetString("id")!;
+        Polyline = json.GetString("polyline")!;
+        PolylineSummary = json.GetString("summary_polyline")!;
     }
 
     #endregion
@@ -40,7 +40,7 @@ public class StravaPolylineMap {
     #region Static methods
 
     public static StravaPolylineMap Parse(JObject json) {
-        return json == null ? null : new StravaPolylineMap(json);
+        return new StravaPolylineMap(json);
     }
 
     #endregion

@@ -132,25 +132,25 @@ public class StravaActivitySummary : StravaObject {
 
     private StravaActivitySummary(JObject json) : base(json) {
         Id = json.GetInt64("id");
-        ExternalId = json.GetString("external_id");
+        ExternalId = json.GetString("external_id")!;
         UploadId = json.GetInt64("upload_id");
-        Name = json.GetString("name");
+        Name = json.GetString("name")!;
         Distance = json.GetFloat("distance");
         MovingTime = json.GetDouble("moving_time", TimeSpan.FromSeconds);
         ElapsedTime = json.GetDouble("elapsed_time", TimeSpan.FromSeconds);
         Type = json.GetEnum<StravaActivityType>("type");
-        StartDate = json.GetString("start_date", EssentialsTime.Parse);
-        StartDateLocal = json.GetString("start_date_local", EssentialsTime.Parse);
-        TimeZone = json.GetString("timezone");
-        StartLatLng = StravaLatLng.Parse(json.GetArray("start_latlng"));
-        EndLatLng = StravaLatLng.Parse(json.GetArray("end_latlng"));
+        StartDate = json.GetString("start_date", EssentialsTime.Parse)!;
+        StartDateLocal = json.GetString("start_date_local", EssentialsTime.Parse)!;
+        TimeZone = json.GetString("timezone")!;
+        StartLatLng = StravaLatLng.Parse(json.GetArray("start_latlng")!);
+        EndLatLng = StravaLatLng.Parse(json.GetArray("end_latlng")!);
         AchievementCount = json.GetInt32("achievement_count");
         KudosCount = json.GetInt32("kudos_count");
         CommentCount = json.GetInt32("comment_count");
         AthleteCount = json.GetInt32("athlete_count");
         PhotoCount = json.GetInt32("photo_count");
         TotalPhotoCount = json.GetInt32("total_photo_count");
-        Map = json.GetObject("map", StravaPolylineMap.Parse);
+        Map = json.GetObject("map", StravaPolylineMap.Parse)!;
         WorkoutType = json.GetInt32("workout_type");
         AverageSpeed = json.GetFloat("average_speed");
         MaxSpeed = json.GetFloat("max_speed");
@@ -161,7 +161,7 @@ public class StravaActivitySummary : StravaObject {
     #region Static methods
 
     public static StravaActivitySummary Parse(JObject json) {
-        return json == null ? null : new StravaActivitySummary(json);
+        return new StravaActivitySummary(json);
     }
 
     #endregion

@@ -35,7 +35,7 @@ public class StravaResponse<T> : StravaResponse {
     /// <summary>
     /// Gets the body of the response.
     /// </summary>
-    public T Body { get; protected set; }
+    public T Body { get; protected set; } = default!;
 
     #endregion
 

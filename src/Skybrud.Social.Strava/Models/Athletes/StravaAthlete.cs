@@ -75,15 +75,14 @@ public class StravaAthlete : StravaObject {
 
     private StravaAthlete(JObject obj) : base(obj) {
         Id = obj.GetInt64("id");
-        Username = obj.GetString("username");
+        Username = obj.GetString("username")!;
         // TODO: Add support for the "resource_state" property
-        FirstName = obj.GetString("firstname");
-        LastName = obj.GetString("lastname");
-        City = obj.GetString("city");
-        State = obj.GetString("state");
-        Country = obj.GetString("country");
-        Sex = obj.GetString("sex");
-        Username = obj.GetString("username");
+        FirstName = obj.GetString("firstname")!;
+        LastName = obj.GetString("lastname")!;
+        City = obj.GetString("city")!;
+        State = obj.GetString("state")!;
+        Country = obj.GetString("country")!;
+        Sex = obj.GetString("sex")!;
         IsPremium = obj.GetBoolean("premium");
         CreatedAt = obj.GetDateTime("created_at");
         UpdatedAt = obj.GetDateTime("updated_at");
@@ -92,7 +91,7 @@ public class StravaAthlete : StravaObject {
         // TODO: Add support for the "profile" property
         // TODO: Add support for the "friend" property
         // TODO: Add support for the "follower" property
-        Email = obj.GetString("email");
+        Email = obj.GetString("email")!;
     }
 
     #endregion
@@ -105,7 +104,7 @@ public class StravaAthlete : StravaObject {
     /// <param name="obj">The instance of <see cref="JObject"/> to be parsed.</param>
     /// <returns>An instance of <see cref="StravaAthlete"/>.</returns>
     public static StravaAthlete Parse(JObject obj) {
-        return obj == null ? null : new StravaAthlete(obj);
+        return new StravaAthlete(obj);
     }
 
     #endregion

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Skybrud.Essentials.Strings.Extensions;
 
 namespace Skybrud.Social.Strava.Scopes;
 
@@ -28,7 +29,7 @@ public class StravaScope {
     /// <summary>
     /// Gets the description of the scope.
     /// </summary>
-    public string Description { get; }
+    public string? Description { get; }
 
     #endregion
 
@@ -42,7 +43,6 @@ public class StravaScope {
     public StravaScope(string alias, string name) {
         Alias = alias;
         Name = name;
-        Description = string.Empty;
     }
 
     /// <summary>
@@ -51,10 +51,10 @@ public class StravaScope {
     /// <param name="alias">The name of the scope.</param>
     /// <param name="name">The name of the scope.</param>
     /// <param name="description">The description of the scope.</param>
-    public StravaScope(string alias, string name, string description) {
+    public StravaScope(string alias, string name, string? description) {
         Alias = alias;
         Name = name;
-        Description = description?.Trim() ?? string.Empty;
+        Description = description?.Trim().NullIfWhiteSpace();
     }
 
     #endregion
@@ -76,9 +76,9 @@ public class StravaScope {
     /// <summary>
     /// Registers a scope in the internal dictionary.
     /// </summary>
-    /// <param name="name">The name of the scope.</param>
-    internal static StravaScope RegisterScope(string name) {
-        StravaScope scope = new StravaScope(name, null);
+    /// <param name="alias">The alias of the scope.</param>
+    internal static StravaScope RegisterScope(string alias) {
+        StravaScope scope = new StravaScope(alias, alias);
         Scopes.Add(scope.Alias, scope);
         return scope;
     }
@@ -99,7 +99,7 @@ public class StravaScope {
     /// </summary>
     /// <param name="alias">The alias of the scope.</param>
     /// <returns>Gets a scope matching the specified <paramref name="alias"/>, or <c>null</c> if not found.</returns>
-    public static StravaScope GetScope(string alias) {
+    public static StravaScope? GetScope(string alias) {
         return Scopes.TryGetValue(alias, out StravaScope scope) ? scope : null;
     }
 

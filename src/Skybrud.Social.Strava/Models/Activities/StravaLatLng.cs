@@ -26,7 +26,6 @@ public class StravaLatLng : IPoint {
     }
 
     public static StravaLatLng Parse(JArray array) {
-        if (array == null || array.Count < 2) return null;
         return new StravaLatLng((float) array.GetDouble(0), (float) array.GetDouble(1));
     }
 

@@ -17,22 +17,22 @@ public class StravaOAuthClient : HttpClient {
     /// <summary>
     /// Gets or sets the client ID of the app.
     /// </summary>
-    public string ClientId { get; set; }
+    public string? ClientId { get; set; }
 
     /// <summary>
     /// Gets or sets the client secret of the app.
     /// </summary>
-    public string ClientSecret { get; set; }
+    public string? ClientSecret { get; set; }
 
     /// <summary>
     /// Gets or sets the redirect URI of your application.
     /// </summary>
-    public string RedirectUri { get; set; }
+    public string? RedirectUri { get; set; }
 
     /// <summary>
     /// Gets or sets the access token.
     /// </summary>
-    public string AccessToken { get; set; }
+    public string? AccessToken { get; set; }
 
     /// <summary>
     /// Gets a reference to the raw <strong>Athletes</strong> endpoint.
@@ -63,27 +63,27 @@ public class StravaOAuthClient : HttpClient {
         return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, default(StravaScopeList));
     }
 
-    public string GetAuthorizationUrl(string state, StravaScope scope) {
+    public string GetAuthorizationUrl(string state, StravaScope? scope) {
         return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeList(scope));
     }
 
-    public string GetAuthorizationUrl(string state, params StravaScope[] scope) {
+    public string GetAuthorizationUrl(string state, params StravaScope[]? scope) {
         return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope == null ? null : new StravaScopeList(scope));
     }
 
-    public string GetAuthorizationUrl(string state, StravaScopeList scope) {
+    public string GetAuthorizationUrl(string state, StravaScopeList? scope) {
         return GetAuthorizationUrl(state, StravaApprovalPrompt.Auto, scope);
     }
 
-    public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScope scope) {
+    public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScope? scope) {
         return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeList(scope));
     }
 
-    public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, params StravaScope[] scope) {
+    public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, params StravaScope[]? scope) {
         return GetAuthorizationUrl(state, approvalPrompt, scope == null ? null : new StravaScopeList(scope));
     }
 
-    public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScopeList scope) {
+    public string GetAuthorizationUrl(string state, StravaApprovalPrompt approvalPrompt, StravaScopeList? scope) {
 
         // Some validation
         if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
@@ -95,8 +95,8 @@ public class StravaOAuthClient : HttpClient {
         }
 
         IHttpQueryString query = new HttpQueryString();
-        query.Add("client_id", ClientId);
-        query.Add("redirect_uri", RedirectUri);
+        query.Add("client_id", ClientId!);
+        query.Add("redirect_uri", RedirectUri!);
         query.Add("response_type", "code");
         query.Add("state", state);
 
@@ -123,8 +123,8 @@ public class StravaOAuthClient : HttpClient {
 
         // Initialize the query string
         IHttpPostData data = new HttpPostData {
-            {"client_id", ClientId},
-            {"client_secret", ClientSecret},
+            {"client_id", ClientId!},
+            {"client_secret", ClientSecret!},
             {"code", authCode},
             {"grant_type", "authorization_code"}
         };
@@ -151,8 +151,8 @@ public class StravaOAuthClient : HttpClient {
 
         // Initialize the query string
         IHttpPostData data = new HttpPostData {
-            {"client_id", ClientId},
-            {"client_secret", ClientSecret},
+            {"client_id", ClientId!},
+            {"client_secret", ClientSecret!},
             {"grant_type", "refresh_token"},
             {"refresh_token", refreshToken}
         };

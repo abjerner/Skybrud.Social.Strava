@@ -12,12 +12,12 @@ public class StravaGetAthleteActiviesOptions : IHttpRequestOptions {
     /// <summary>
     /// A timestamp to use for filtering activities that have taken place before a certain time.
     /// </summary>
-    public EssentialsTime Before { get; set; }
+    public EssentialsTime? Before { get; set; }
 
     /// <summary>
     /// A timestamp to use for filtering activities that have taken place after a certain time.
     /// </summary>
-    public EssentialsTime After { get; set; }
+    public EssentialsTime? After { get; set; }
 
     /// <summary>
     /// Page number. Defaults to 1 if not specified.

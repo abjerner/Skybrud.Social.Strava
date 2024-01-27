@@ -35,7 +35,7 @@ public class StravaDetailedClub : StravaObject {
     private StravaDetailedClub(JObject obj) : base(obj) {
         Id = obj.GetInt64("id");
         // TODO: Add support for the "resource_state" property
-        Name = obj.GetString("name");
+        Name = obj.GetString("name")!;
         // TODO: Add support for the "profile_medium" property
         // TODO: Add support for the "cover_photo" property
         // TODO: Add support for the "cover_photo_small" property
@@ -64,7 +64,7 @@ public class StravaDetailedClub : StravaObject {
     /// <param name="obj">The instance of <see cref="JObject"/> to be parsed.</param>
     /// <returns>An instance of <see cref="StravaDetailedClub"/>.</returns>
     public static StravaDetailedClub Parse(JObject obj) {
-        return obj == null ? null : new StravaDetailedClub(obj);
+        return new StravaDetailedClub(obj);
     }
 
     #endregion
