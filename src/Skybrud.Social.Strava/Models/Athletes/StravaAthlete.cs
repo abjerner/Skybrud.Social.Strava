@@ -60,12 +60,12 @@ public class StravaAthlete : StravaObject {
     /// <summary>
     /// Gets the time at which the athlete was created.
     /// </summary>
-    public EssentialsDateTime CreatedAt { get; }
+    public EssentialsTime CreatedAt { get; }
 
     /// <summary>
     /// Gets the time at which the athlete was last updated.
     /// </summary>
-    public EssentialsDateTime UpdatedAt { get; }
+    public EssentialsTime UpdatedAt { get; }
 
     public string Email { get; }
 
@@ -84,8 +84,8 @@ public class StravaAthlete : StravaObject {
         Country = obj.GetString("country")!;
         Sex = obj.GetString("sex")!;
         IsPremium = obj.GetBoolean("premium");
-        CreatedAt = obj.GetDateTime("created_at");
-        UpdatedAt = obj.GetDateTime("updated_at");
+        CreatedAt = obj.GetDouble("created_at", EssentialsTime.FromUnixTimeSeconds)!;
+        UpdatedAt = obj.GetDouble("updated_at", EssentialsTime.FromUnixTimeSeconds)!;
         // TODO: Add support for the "badge_type_id" property
         // TODO: Add support for the "profile_medium" property
         // TODO: Add support for the "profile" property
