@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using Newtonsoft.Json.Linq;
+using Skybrud.Essentials.Exceptions;
 using Skybrud.Essentials.Json.Newtonsoft;
 
 namespace Skybrud.Social.Strava.Models;
@@ -7,6 +9,15 @@ namespace Skybrud.Social.Strava.Models;
 /// Class representing an object received from the Strava API.
 /// </summary>
 public class StravaObject : JsonObjectBase {
+
+    #region Properties
+
+    /// <summary>
+    /// Gets the internal <see cref="JObject"/> the object was created from.
+    /// </summary>
+    public new JObject JObject => base.JObject!;
+
+    #endregion
 
     #region Constructors
 
