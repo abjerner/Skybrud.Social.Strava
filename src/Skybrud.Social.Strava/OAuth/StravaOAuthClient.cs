@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Client;
@@ -138,6 +139,36 @@ public class StravaOAuthClient : HttpClient {
     }
 
     /// <summary>
+    /// Exchanges the specified authorization code for an access token.
+    /// </summary>
+    /// <param name="authCode">The authorization code received from the Strava OAuth dialog.</param>
+    /// <returns>An instance of <see cref="StravaTokenResponse"/> representing the response.</returns>
+    public async Task<StravaTokenResponse> GetAccessTokenFromAuthCodeAsync(string authCode) {
+
+        // Some validation
+        if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+        if (string.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
+        if (string.IsNullOrWhiteSpace(authCode)) throw new ArgumentNullException(nameof(authCode));
+
+        // Initialize the query string
+        IHttpPostData data = new HttpPostData {
+            {"client_id", ClientId!},
+            {"client_secret", ClientSecret!},
+            {"code", authCode},
+            {"grant_type", "authorization_code"}
+        };
+
+        // Make the call to the API
+        IHttpResponse response = await HttpRequest
+            .Post("https://www.strava.com/api/v3/oauth/token", data)
+            .GetResponseAsync();
+
+        // Parse the response
+        return new StravaTokenResponse(response);
+
+    }
+
+    /// <summary>
     /// Exchanges the specified refresh token for an access token.
     /// </summary>
     /// <param name="refreshToken">The refresh token.</param>
@@ -159,6 +190,36 @@ public class StravaOAuthClient : HttpClient {
 
         // Make the call to the API
         IHttpResponse response = HttpUtils.Requests.Post("https://www.strava.com/api/v3/oauth/token", data);
+
+        // Parse the response
+        return new StravaTokenResponse(response);
+
+    }
+
+    /// <summary>
+    /// Exchanges the specified refresh token for an access token.
+    /// </summary>
+    /// <param name="refreshToken">The refresh token.</param>
+    /// <returns>An instance of <see cref="StravaTokenResponse"/> representing the response.</returns>
+    public async Task<StravaTokenResponse> GetAccessTokenFromRefereshTokenAsync(string refreshToken) {
+
+        // Some validation
+        if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+        if (string.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
+        if (string.IsNullOrWhiteSpace(refreshToken)) throw new ArgumentNullException(nameof(refreshToken));
+
+        // Initialize the query string
+        IHttpPostData data = new HttpPostData {
+            {"client_id", ClientId!},
+            {"client_secret", ClientSecret!},
+            {"grant_type", "refresh_token"},
+            {"refresh_token", refreshToken}
+        };
+
+        // Make the call to the API
+        IHttpResponse response = await HttpRequest
+            .Post("https://www.strava.com/api/v3/oauth/token", data)
+            .GetResponseAsync();
 
         // Parse the response
         return new StravaTokenResponse(response);
