@@ -6,9 +6,9 @@ using Skybrud.Social.Strava.Options.Athletes;
 namespace Skybrud.Social.Strava.Endpoints;
 
 /// <summary>
-/// Raw implementation of the <strong>Athletes</strong> endpoint.
+/// Raw implementation of the <strong>Athlete</strong> endpoint.
 /// </summary>
-public class StravaAthletesRawEndpoint {
+public class StravaAthleteRawEndpoint {
 
     #region Properties
 
@@ -21,7 +21,7 @@ public class StravaAthletesRawEndpoint {
 
     #region Constructors
 
-    internal StravaAthletesRawEndpoint(StravaOAuthClient client) {
+    internal StravaAthleteRawEndpoint(StravaOAuthClient client) {
         Client = client;
     }
 

@@ -19,7 +19,7 @@ public class StravaHttpService {
     /// <summary>
     /// Gets a reference to the <strong>Athletes</strong> endpoint.
     /// </summary>
-    public StravaAthletesEndpoint Athletes { get; }
+    public StravaAthleteEndpoint Athlete { get; }
 
     #endregion
 
@@ -30,7 +30,7 @@ public class StravaHttpService {
     /// </summary>
     public StravaHttpService(StravaOAuthClient client) {
         Client = client;
-        Athletes = new StravaAthletesEndpoint(this);
+        Athlete = new StravaAthleteEndpoint(this);
     }
 
     #endregion

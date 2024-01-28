@@ -37,7 +37,7 @@ public class StravaOAuthClient : HttpClient {
     /// <summary>
     /// Gets a reference to the raw <strong>Athletes</strong> endpoint.
     /// </summary>
-    public StravaAthletesRawEndpoint Athletes { get; }
+    public StravaAthleteRawEndpoint Athlete { get; }
 
     #endregion
 
@@ -47,7 +47,7 @@ public class StravaOAuthClient : HttpClient {
     /// Initializes a new instance with default options.
     /// </summary>
     public StravaOAuthClient() {
-        Athletes = new StravaAthletesRawEndpoint(this);
+        Athlete = new StravaAthleteRawEndpoint(this);
     }
 
     #endregion

@@ -4,9 +4,9 @@ using Skybrud.Social.Strava.Responses.Activities;
 namespace Skybrud.Social.Strava.Endpoints;
 
 /// <summary>
-/// Implementation of the <strong>Athletes</strong> endpoint.
+/// Implementation of the <strong>Athlete</strong> endpoint.
 /// </summary>
-public class StravaAthletesEndpoint {
+public class StravaAthleteEndpoint {
 
     #region Properties
 
@@ -18,13 +18,13 @@ public class StravaAthletesEndpoint {
     /// <summary>
     /// Gets a reference to the raw endpoint.
     /// </summary>
-    public StravaAthletesRawEndpoint Raw => Service.Client.Athletes;
+    public StravaAthleteRawEndpoint Raw => Service.Client.Athlete;
 
     #endregion
 
     #region Constructors
 
-    internal StravaAthletesEndpoint(StravaHttpService service) {
+    internal StravaAthleteEndpoint(StravaHttpService service) {
         Service = service;
     }
 
