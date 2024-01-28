@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Skybrud.Social.Strava.Endpoints;
 using Skybrud.Social.Strava.OAuth;
+using Skybrud.Social.Strava.Responses.Authentication;
 
 namespace Skybrud.Social.Strava;
 
@@ -50,6 +52,48 @@ public class StravaHttpService {
     public static StravaHttpService CreateFromAccessToken(string accessToken) {
         if (string.IsNullOrWhiteSpace(accessToken)) throw new ArgumentNullException(nameof(accessToken));
         return new StravaHttpService(new StravaOAuthClient { AccessToken = accessToken });
+    }
+
+    public static StravaHttpService CreateFromRefreshToken(string clientId, string clientSecret, string refreshToken) {
+
+        // Validate the input
+        if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientId));
+        if (string.IsNullOrWhiteSpace(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
+        if (string.IsNullOrWhiteSpace(refreshToken)) throw new ArgumentNullException(nameof(refreshToken));
+
+        // Initialize a new OAuth client
+        StravaOAuthClient client = new(clientId, clientSecret);
+
+        // Get a new access token from the request token
+        StravaTokenResponse response = client.GetAccessTokenFromRefereshToken(refreshToken);
+
+        // Update the client with the access token from the response body
+        client.AccessToken = response.Body.AccessToken;
+
+        // Initialize and return a new HTTP service instance
+        return new StravaHttpService(client);
+
+    }
+
+    public static async Task<StravaHttpService> CreateFromRefreshTokenAsync(string clientId, string clientSecret, string refreshToken) {
+
+        // Validate the input
+        if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientId));
+        if (string.IsNullOrWhiteSpace(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
+        if (string.IsNullOrWhiteSpace(refreshToken)) throw new ArgumentNullException(nameof(refreshToken));
+
+        // Initialize a new OAuth client
+        StravaOAuthClient client = new(clientId, clientSecret);
+
+        // Get a new access token from the request token
+        StravaTokenResponse response = await client.GetAccessTokenFromRefereshTokenAsync(refreshToken);
+
+        // Update the client with the access token from the response body
+        client.AccessToken = response.Body.AccessToken;
+
+        // Initialize and return a new HTTP service instance
+        return new StravaHttpService(client);
+
     }
 
     #endregion

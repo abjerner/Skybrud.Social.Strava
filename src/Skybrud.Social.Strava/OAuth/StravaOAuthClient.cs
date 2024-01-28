@@ -51,6 +51,21 @@ public class StravaOAuthClient : HttpClient {
         Athlete = new StravaAthleteRawEndpoint(this);
     }
 
+    public StravaOAuthClient(string accessToken) : this() {
+        AccessToken = accessToken;
+    }
+
+    public StravaOAuthClient(string clientId, string clientSecret) : this() {
+        ClientId = clientId;
+        ClientSecret = clientSecret;
+    }
+
+    public StravaOAuthClient(string clientId, string clientSecret, string? redirectUri) : this() {
+        ClientId = clientId;
+        ClientSecret = clientSecret;
+        RedirectUri = redirectUri;
+    }
+
     #endregion
 
     #region Member methods
@@ -237,6 +252,22 @@ public class StravaOAuthClient : HttpClient {
             request.Authorization = $"Bearer {AccessToken}";
         }
 
+    }
+
+    #endregion
+
+    #region Static methods
+
+    public static StravaOAuthClient CreateFromAccessToken(string accessToken) {
+        return new StravaOAuthClient(accessToken);
+    }
+
+    public static StravaOAuthClient CreateFromConsumerKey(string consumerKey, string consumerSecret) {
+        return new StravaOAuthClient(consumerKey, consumerSecret);
+    }
+
+    public static StravaOAuthClient CreateFromConsumerKey(string consumerKey, string consumerSecret, string? redirectUri) {
+        return new StravaOAuthClient(consumerKey, consumerSecret, redirectUri);
     }
 
     #endregion
