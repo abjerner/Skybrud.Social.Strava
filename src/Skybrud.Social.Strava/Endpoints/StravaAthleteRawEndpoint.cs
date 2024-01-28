@@ -87,6 +87,15 @@ public class StravaAthleteRawEndpoint {
         return Client.GetResponse(options);
     }
 
+    public async Task<IHttpResponse> GetActivitiesAsync() {
+        return await GetActivitiesAsync(new StravaGetAthleteActiviesOptions());
+    }
+
+    public async Task<IHttpResponse> GetActivitiesAsync(StravaGetAthleteActiviesOptions options) {
+        if (options == null) throw new ArgumentNullException(nameof(options));
+        return await Client.GetResponseAsync(options);
+    }
+
     #endregion
 
 }

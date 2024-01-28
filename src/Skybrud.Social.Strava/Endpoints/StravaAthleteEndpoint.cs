@@ -88,6 +88,14 @@ public class StravaAthleteEndpoint {
         return new StravaActivityListResponse(Raw.GetActivities(options));
     }
 
+    public async Task<StravaActivityListResponse> GetActivitiesAsync() {
+        return new StravaActivityListResponse(await Raw.GetActivitiesAsync());
+    }
+
+    public async Task<StravaActivityListResponse> GetActivitiesAsync(StravaGetAthleteActiviesOptions options) {
+        return new StravaActivityListResponse(await Raw.GetActivitiesAsync(options));
+    }
+
     #endregion
 
 }
