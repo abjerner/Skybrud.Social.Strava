@@ -1,5 +1,7 @@
-﻿using Skybrud.Social.Strava.Options.Athletes;
+﻿using System.Threading.Tasks;
+using Skybrud.Social.Strava.Options.Athletes;
 using Skybrud.Social.Strava.Responses.Activities;
+using Skybrud.Social.Strava.Responses.Athletes;
 
 namespace Skybrud.Social.Strava.Endpoints;
 
@@ -31,6 +33,52 @@ public class StravaAthleteEndpoint {
     #endregion
 
     #region Member methods
+
+    /// <summary>
+    /// Returns information about the authenticated athlete.
+    /// </summary>
+    /// <returns>An instance of <see cref="StravaAthleteResponse"/> representing the response from the Strava API.</returns>
+    /// <see>
+    ///     <cref>https://developers.strava.com/docs/reference/#api-Athletes-getLoggedInAthlete</cref>
+    /// </see>
+    public StravaAthleteResponse GetAthlete() {
+        return new StravaAthleteResponse(Raw.GetAthlete());
+    }
+
+    /// <summary>
+    /// Returns information about the authenticated athlete.
+    /// </summary>
+    /// <param name="options">The options for the request to the Strava API.</param>
+    /// <returns>An instance of <see cref="StravaAthleteResponse"/> representing the response from the Strava API.</returns>
+    /// <see>
+    ///     <cref>https://developers.strava.com/docs/reference/#api-Athletes-getLoggedInAthlete</cref>
+    /// </see>
+    public StravaAthleteResponse GetAthlete(StravaGetAthleteOptions options) {
+        return new StravaAthleteResponse(Raw.GetAthlete(options));
+    }
+
+    /// <summary>
+    /// Returns information about the authenticated athlete.
+    /// </summary>
+    /// <returns>An instance of <see cref="StravaAthleteResponse"/> representing the response from the Strava API.</returns>
+    /// <see>
+    ///     <cref>https://developers.strava.com/docs/reference/#api-Athletes-getLoggedInAthlete</cref>
+    /// </see>
+    public async Task<StravaAthleteResponse> GetAthleteAsync() {
+        return new StravaAthleteResponse(await Raw.GetAthleteAsync());
+    }
+
+    /// <summary>
+    /// Returns information about the authenticated athlete.
+    /// </summary>
+    /// <param name="options">The options for the request to the Strava API.</param>
+    /// <returns>An instance of <see cref="StravaAthleteResponse"/> representing the response from the Strava API.</returns>
+    /// <see>
+    ///     <cref>https://developers.strava.com/docs/reference/#api-Athletes-getLoggedInAthlete</cref>
+    /// </see>
+    public async Task<StravaAthleteResponse> GetAthleteAsync(StravaGetAthleteOptions options) {
+        return new StravaAthleteResponse(await Raw.GetAthleteAsync(options));
+    }
 
     public StravaActivityListResponse GetActivities() {
         return new StravaActivityListResponse(Raw.GetActivities());
