@@ -20,7 +20,7 @@ public class StravaAthlete : StravaObject {
     /// </summary>
     public long Id { get; }
 
-    public string Username { get; }
+    public string? Username { get; }
 
     /// <summary>
     /// Gets the athlete's first name.
@@ -40,7 +40,7 @@ public class StravaAthlete : StravaObject {
     /// <summary>
     /// Gets the athlete's state or geographical region.
     /// </summary>
-    public string State { get; }
+    public string? State { get; }
 
     /// <summary>
     /// Gets the athlete's country.
@@ -50,7 +50,7 @@ public class StravaAthlete : StravaObject {
     /// <summary>
     /// Gets the athlete's sex. May take one of the following values: <c>M</c>, <c>F</c>
     /// </summary>
-    public string Sex { get; }
+    public string? Sex { get; }
 
     /// <summary>
     /// Gets the athlete's premium status.
@@ -67,7 +67,7 @@ public class StravaAthlete : StravaObject {
     /// </summary>
     public EssentialsTime UpdatedAt { get; }
 
-    public string Email { get; }
+    public string? Email { get; }
 
     #endregion
 
@@ -75,23 +75,26 @@ public class StravaAthlete : StravaObject {
 
     private StravaAthlete(JObject obj) : base(obj) {
         Id = obj.GetInt64("id");
-        Username = obj.GetString("username")!;
+        Username = obj.GetString("username");
         // TODO: Add support for the "resource_state" property
         FirstName = obj.GetString("firstname")!;
         LastName = obj.GetString("lastname")!;
+        // TODO: Add support for the "bio" property (nullable)
         City = obj.GetString("city")!;
-        State = obj.GetString("state")!;
+        State = obj.GetString("state");
         Country = obj.GetString("country")!;
-        Sex = obj.GetString("sex")!;
+        Sex = obj.GetString("sex"); // TODO: Either "M" or "F" according to Swagger | not really documented, but both "Non-binary" and "Prefer not to say" are returned as null by the API
         IsPremium = obj.GetBoolean("premium");
-        CreatedAt = obj.GetDouble("created_at", EssentialsTime.FromUnixTimeSeconds)!;
-        UpdatedAt = obj.GetDouble("updated_at", EssentialsTime.FromUnixTimeSeconds)!;
+        // TODO: Add support for the "summit" property
+        CreatedAt = obj.GetString("created_at", ParseIso8601DateTime)!;
+        UpdatedAt = obj.GetString("updated_at", ParseIso8601DateTime)!;
         // TODO: Add support for the "badge_type_id" property
+        // TODO: Add support for the "weight" property (nullable)
         // TODO: Add support for the "profile_medium" property
         // TODO: Add support for the "profile" property
-        // TODO: Add support for the "friend" property
-        // TODO: Add support for the "follower" property
-        Email = obj.GetString("email")!;
+        // TODO: Add support for the "friend" property (nullable)
+        // TODO: Add support for the "follower" property (nullable)
+        Email = obj.GetString("email");
     }
 
     #endregion

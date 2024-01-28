@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Exceptions;
 using Skybrud.Essentials.Json.Newtonsoft;
+using Skybrud.Essentials.Time;
 
 namespace Skybrud.Social.Strava.Models;
 
@@ -26,6 +27,18 @@ public class StravaObject : JsonObjectBase {
     /// </summary>
     /// <param name="obj">The instance of <see cref="JObject"/> representing the object.</param>
     protected StravaObject(JObject obj) : base(obj) { }
+
+    #endregion
+
+    #region Static methods
+
+    internal static EssentialsTime? ParseIso8601DateTime(string? value) {
+        try {
+            return string.IsNullOrWhiteSpace(value) ? null : EssentialsTime.FromIso8601(value);
+        } catch (Exception ex) {
+            throw new ComputerSaysNoException("--" + value + "--" + (value == null) + "--", ex);
+        }
+    }
 
     #endregion
 
