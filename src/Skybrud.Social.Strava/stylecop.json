@@ -1,0 +1,19 @@
+{
+	"settings": {
+		"indentation": {
+			"indentationSize": 4,
+			"useTabs": false
+		},
+		"orderingRules": {
+			"systemUsingDirectivesFirst": true,
+			"usingDirectivesPlacement": "outsideNamespace",
+			"blankLinesBetweenUsingGroups": "require"
+		},
+		"layoutRules": {
+			"newlineAtEndOfFile": "omit"
+		},
+		"readabilityRules": {
+
+		}
+	}
+}
